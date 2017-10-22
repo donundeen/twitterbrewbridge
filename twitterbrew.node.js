@@ -38,7 +38,7 @@ each(bridgeconfigs as user, config){
     sbs[user].addsubscribe(channel, "string");
     function(_user, _channel){
       sbs[_user].handlestring(string, function(){
-        twts[_user].dms.sendmsgs("#"+_channel+")" ::: " + string); // send as dm (or with @ ?)
+        twts[_user].tweets.sendmsgs("@"+_user+" #"+_channel+" ::: " + string); // send as dm (or with @ ?)
       });
     }(_user, channel);
   }
@@ -49,7 +49,7 @@ every(second){
   each(configs as user, config){
     function(_user){
       each(config as channel){
-        twts[_user].dms().search("#"+_channel+")" ::: ", fuction(results){ // searching dms, or @?
+        twts[_user].dms().search("@"+_user+" #"+_channel+" ::: ", fuction(results){ // searching dms, or @?
           each(results as result){
             var message = result.match(/regex/)[1];
             sbs[user].sendmsg(_channel, message);

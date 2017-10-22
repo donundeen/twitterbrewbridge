@@ -13,16 +13,26 @@ Type: string
 bridgeconfig
 {
 twitteruser1 : {
-  pubsub1,
-  pubsub2
+  publishers:{
+    pub1,
+    pub2
+  },
+  subscribers :{
+    sub1,
+    sub2
+  }
 
 },
 
 twitteruser2 : {
-  pubsub3,
-  pubsub4,
-
-}
+  publishers:{
+    pub1,
+    pub2
+  },
+  subscribers :{
+    sub1,
+    sub2
+  }
 
 }
 
@@ -33,8 +43,11 @@ each(bridgeconfigs as user, config){
   sbs[user] = new spacebrew();
   twts[user] = new twitter(user);
   
-  each(config as channel){
+  each(config.publishers as channel){
     sbs[user].addpublish(channel, "string");
+  }
+
+  each(config.subscribers as channel){
     sbs[user].addsubscribe(channel, "string");
     function(_user, _channel){
       sbs[_user].handlestring(string, function(){
@@ -48,7 +61,7 @@ each(bridgeconfigs as user, config){
 every(second){
   each(configs as user, config){
     function(_user){
-      each(config as channel){
+      each(config.publishers as channel){
         twts[_user].dms().search("@"+_user+" #"+_channel+" ::: ", fuction(results){ // searching dms, or @?
           each(results as result){
             var message = result.match(/regex/)[1];

@@ -1,4 +1,8 @@
 /*
+// see also: http://randomnerdtutorials.com/posting-a-tweet-with-the-esp8266/
+// https://www.npmjs.com/package/twitter
+// https://www.npmjs.com/package/spacebrew
+
 
 subscribers -> Spacebrew -> Twitter
 

@@ -1,3 +1,23 @@
+require("twitter");
+
+
+
+var secrets = require("/secrets.js");
+
+
+var twitterClient = new Twitter({
+  consumer_key: ConsumerKey,
+  consumer_secret: ConsumerSecret,
+  access_token_key: AccessToken,
+  access_token_secret: AccessSecret
+});
+
+client.post('statuses/update', {status: 'just ignore this, testing'},  function(error, tweet, response) {
+  if(error) throw error;
+  console.log(tweet);  // Tweet body. 
+  console.log(response);  // Raw response object. 
+});
+
 /*
 // see also: http://randomnerdtutorials.com/posting-a-tweet-with-the-esp8266/
 // https://www.npmjs.com/package/twitter

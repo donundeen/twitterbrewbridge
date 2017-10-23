@@ -1,6 +1,6 @@
 module.exports = {
 
-twitteruser1 : {
+device1 : {
   publishers:{
     'pub1',
     'pub2'
@@ -12,7 +12,7 @@ twitteruser1 : {
 
 },
 
-twitteruser2 : {
+device2 : {
   publishers:{
     'pub1',
     'pub2'

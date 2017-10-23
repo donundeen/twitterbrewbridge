@@ -1,22 +1,24 @@
-require("twitter");
-
-
-
-var secrets = require("/secrets.js");
-
+var Twitter = require("twitter");
+var secrets = require("./secrets.js");
+var bridgeconfig = require("./bridgeconfig.js");
 
 var twitterClient = new Twitter({
-  consumer_key: ConsumerKey,
-  consumer_secret: ConsumerSecret,
-  access_token_key: AccessToken,
-  access_token_secret: AccessSecret
+  consumer_key: secrets.ConsumerKey,
+  consumer_secret: secrets.ConsumerSecret,
+  access_token_key: secrets.AccessToken,
+  access_token_secret: secrets.AccessSecret
 });
 
-client.post('statuses/update', {status: 'just ignore this, testing'},  function(error, tweet, response) {
+twitterClient.post('statuses/update', {status: 'just ignore this, testing'},  function(error, tweet, response) {
   if(error) throw error;
   console.log(tweet);  // Tweet body. 
   console.log(response);  // Raw response object. 
 });
+
+
+
+
+
 
 /*
 // see also: http://randomnerdtutorials.com/posting-a-tweet-with-the-esp8266/
@@ -75,7 +77,7 @@ each(bridgeconfigs as user, config){
     sbs[user].addsubscribe(channel, "string");
     function(_user, _channel){
       sbs[_user].handlestring(string, function(){
-        twts[_user].tweets.sendmsgs("@"+_user+" #"+_channel+" ::: " + string); // send as dm (or with @ ?)
+        twts[_user].tweets.sendmsgs("#"+_user+" #"+_channel+" ::: " + string); // send as dm (or with @ ?)
       });
     }(_user, channel);
   }
@@ -86,7 +88,7 @@ every(second){
   each(configs as user, config){
     function(_user){
       each(config.publishers as channel){
-        twts[_user].dms().search("@"+_user+" #"+_channel+" ::: ", fuction(results){ // searching dms, or @?
+        twts[_user].dms().search("#"+_user+" #"+_channel+" ::: ", fuction(results){ // searching dms, or @?
           each(results as result){
             var message = result.match(/regex/)[1];
             sbs[user].sendmsg(_channel, message);

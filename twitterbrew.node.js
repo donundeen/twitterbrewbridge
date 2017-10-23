@@ -9,12 +9,49 @@ var twitterClient = new Twitter({
   access_token_secret: secrets.AccessSecret
 });
 
-twitterClient.post('statuses/update', {status: 'just ignore this, testing'},  function(error, tweet, response) {
-  if(error) throw error;
-  console.log(tweet);  // Tweet body. 
-  console.log(response);  // Raw response object. 
-});
 
+
+var sendTwitterMessage = function(device, channel, message){
+  var fullmessage = "#"+device + "#"+channel + " ["+Math.random().toString().substr(3,4)+"]" + message;
+  twitterClient.post('statuses/update', {status: fullmessage},  function(error, tweet, response) {
+    if(error) { 
+      console.log("ERROR");
+      console.log(error);
+      throw error
+    };
+    console.log("sent message :" + fullmessage);
+//    console.log(tweet);  // Tweet body. 
+//    console.log(response);  // Raw response object. 
+  });
+};
+
+
+var openSearchStream = function(device, channel){
+
+  twitterClient.stream('statuses/filter', {track: "#"+device + "#"+channel }, function(stream) {
+    stream.on('data', function(event) {
+      console.log("got data");
+      console.log(event && event.text);
+    });
+   
+    stream.on('error', function(error) {
+      console.log("ERROR");
+      console.log(error);
+      throw error;
+    });
+  });
+};
+
+
+//openSearchStream("device1", "channel2");
+
+
+sendTwitterMessage("device1" ,"channel2", "just testing 9");
+
+
+
+var sbs = {};
+var twts = {};
 
 
 

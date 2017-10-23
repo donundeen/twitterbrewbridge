@@ -2,6 +2,10 @@ var Twitter = require("twitter");
 var secrets = require("./secrets.js");
 var bridgeconfig = require("./bridgeconfig.js");
 
+var twitterid = 922196835355283457;
+
+//twitterid = 19132948;
+
 var twitterClient = new Twitter({
   consumer_key: secrets.ConsumerKey,
   consumer_secret: secrets.ConsumerSecret,
@@ -27,8 +31,9 @@ var sendTwitterMessage = function(device, channel, message){
 
 
 var openSearchStream = function(device, channel){
-
-  twitterClient.stream('statuses/filter', {track: "#"+device + "#"+channel }, function(stream) {
+  console.log("following " + twitterid);
+ // twitterClient.stream('statuses/filter', {track: "#"+device + "#"+channel }, function(stream) {
+  twitterClient.stream('statuses/filter', {follow: twitterid }, function(stream) {
     stream.on('data', function(event) {
       console.log("got data");
       console.log(event && event.text);
@@ -44,9 +49,10 @@ var openSearchStream = function(device, channel){
 
 
 //openSearchStream("device1", "channel2");
+openSearchStream("device1", "channel2");
 
 
-sendTwitterMessage("device1" ,"channel2", "just testing 9");
+//sendTwitterMessage("device1" ,"channel2", "just testing 9");
 
 
 
